@@ -6,5 +6,5 @@
     <content src="index.html" />
     <preference name="Orientation" value="landscape" />
 
-    <plugin name="cordova-plugin-websockets-server" spec="^1.0.0" />
+    <plugin name="cordova-plugin-websocket-server" />
 </widget>
