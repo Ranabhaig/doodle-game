@@ -1,13 +1,12 @@
-name: Build Cordova Android APK
+name: Build Cordova APK
 
 on:
   push:
     branches: [ "main", "master" ]
-  workflow_dispatch: # Allows you to run the build manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   build:
-    name: Build APK
     runs-on: ubuntu-latest
 
     steps:
@@ -17,30 +16,29 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '18' # Recommended for Cordova 12
+          node-version: '18'
 
       - name: Setup Java JDK
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17' # Required for newer Android SDKs and Gradle versions
+          java-version: '11' # JDK 11 is the "sweet spot" for Cordova stability
 
-      - name: Install Cordova CLI
-        run: npm install -g cordova@12
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
-      - name: Install npm dependencies
+      - name: Install Cordova
+        run: npm install -g cordova@12.0.0
+
+      - name: Install Project Dependencies
         run: npm install
 
+      # FIX: Force a compatible Android platform version
       - name: Add Android Platform
-        # This will also automatically parse your config.xml and install cordova-plugin-websockets-server
-        run: cordova platform add android@12 
+        run: cordova platform add android@12.0.0
 
-      - name: Build Android APK (Debug)
+      # FIX: This environment variable often bypasses Gradle/XmlParser script errors
+      - name: Build Debug APK
         run: cordova build android --debug
-
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: DoodleSquad-MP-APK
-          path: platforms/android/app/build/outputs/apk/debug/app-debug.apk
-          retention-days: 7
+        env:
+          ORG_GRADLE_PROJECT_cdvMinSdkVersion: 24
