@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.doodlesquad.mp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Doodle Squad MP</name>
+    <description>Offline Multiplayer Hotspot Game</description>
+    <author>You</author>
+    <content src="index.html" />
+    <preference name="Orientation" value="landscape" />
+
+    <plugin name="cordova-plugin-websockets-server" spec="^1.0.0" />
+</widget>

@@ -1,0 +1,7 @@
+{
+  "name": "doodlesquad",
+  "version": "1.0.0",
+  "dependencies": {
+    "cordova": "^12.0.0"
+  }
+}
